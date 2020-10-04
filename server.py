@@ -17,4 +17,4 @@ def somar(v1,v2):
 
     return str(resposta)
 
-app.run(port=5000, host="0.0.0.0")
+app.run(port='8000', host="0.0.0.0")
