@@ -99,8 +99,6 @@ class PessoaDAO():
 
     def get_index(self, id, df):
 
-        index = df.loc[df.id == id, :].index
-
         index = df.loc[df.id == id, :].index[0]
 
         return index
