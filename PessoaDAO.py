@@ -45,17 +45,36 @@ class PessoaDAO():
 
         df = self.open()
         i = self.get_index(id, df)
+
         pessoa = Pessoa()
 
         pessoa.id = id
-        linha = df.iloc[i].values[0]
-
-        pessoa.nome  = linha[1]
-        pessoa.idade = linha[2]
-        pessoa.peso  = linha[3]
-
+        pessoa.nome  = df.iloc[i].nome
+        pessoa.idade = df.iloc[i].idade
+        pessoa.peso  = df.iloc[i].peso
 
         return pessoa
+
+
+    def read_all(self):
+
+        df = self.open()
+
+        pessoas = []
+
+
+        for i in range(len(df)):
+            pessoa = Pessoa()
+            pessoa.id = df.iloc[i].id
+            pessoa.nome = df.iloc[i].nome
+            pessoa.idade = df.iloc[i].idade
+            pessoa.peso = df.iloc[i].peso
+
+            pessoas.append(pessoa)
+
+        return pessoas
+
+
 
 
     def update(self, pessoa):
@@ -81,6 +100,9 @@ class PessoaDAO():
     def get_index(self, id, df):
 
         index = df.loc[df.id == id, :].index
+
+        index = df.loc[df.id == id, :].index[0]
+
         return index
 
 
@@ -94,6 +116,7 @@ class PessoaDAO():
 
 if __name__ == '__main__':
 
+
     pessoa = Pessoa()
     pessoa.nome  = 'Sandeco'
     pessoa.idade = 43
@@ -102,15 +125,22 @@ if __name__ == '__main__':
     dao = PessoaDAO()
     dao.create(pessoa)
 
+
+
+
     pessoa.nome  = 'Sanderson Macedo'
     pessoa.idade = 44
     pessoa.peso  = 81
 
     dao.update(pessoa)
 
-    dao.delete(1)
+    #dao.delete(1)
 
     pessoa = dao.read(10)
+
+
+    pessoas = dao.read_all()
+
 
     i =0
 
